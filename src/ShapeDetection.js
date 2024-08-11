@@ -29,7 +29,7 @@ const ShapeDetection = () => {
         formData.append('choice', choice);
 
         try {
-            const response = await fetch('http://210.18.155.129:8080/upload', { // Updated IP address and port
+            const response = await fetch('http://210.18.155.129:5000/upload', { // Updated IP address and port
                 method: 'POST',
                 body: formData
             });
