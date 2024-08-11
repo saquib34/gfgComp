@@ -50,7 +50,7 @@
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formData = new FormData(this);
-            fetch('http://yourdomain.ddns.net:8000/upload', {
+            fetch('http://210.18.155.129:5000/upload', {
                 method: 'POST',
                 body: formData
             })
