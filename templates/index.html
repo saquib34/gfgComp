@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Detection and Processing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .img-container {
+            margin-top: 20px;
+        }
+        .button-group {
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shape Detection and Processing</h1>
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Upload CSV File:</label>
+                <input type="file" class="form-control-file" id="file" name="file" required>
+            </div>
+            <div class="form-group">
+                <label for="choice">Select Action:</label>
+                <select class="form-control" id="choice" name="choice" required>
+                    <option value="1">Detect Shape</option>
+                    <option value="2">Detect Symmetry</option>
+                    <option value="3">Complete Curves</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Process</button>
+                <div id="downloadBtn" style="display: inline-block; margin-left: 10px;">
+                    <a id="downloadLink" class="btn btn-success" href="#" download style="display: none;">Download SVG</a>
+                </div>
+            </div>
+        </form>
+        <div class="img-container" id="imagesContainer"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var imagesContainer = document.getElementById('imagesContainer');
+                imagesContainer.innerHTML = '';
+
+                if (data.images) {
+                    data.images.forEach(imgData => {
+                        var img = document.createElement('img');
+                        img.src = imgData;
+                        img.className = 'img-fluid';
+                        imagesContainer.appendChild(img);
+                    });
+                }
+
+                if (data.svg_url) {
+                    var downloadBtn = document.getElementById('downloadBtn');
+                    var downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = data.svg_url;
+                    downloadLink.style.display = 'inline';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
