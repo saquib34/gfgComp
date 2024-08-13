@@ -51,7 +51,7 @@
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formData = new FormData(this);
-            fetch('https://f752-210-18-155-129.ngrok-free.app/upload', {
+            fetch('http://210.18.155.129/upload', {
                 method: 'POST',
                 body: formData
             })
