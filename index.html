@@ -22,6 +22,7 @@
 </head>
 <body>
     <div class="container">
+        <h4>Hi</h4>
         <h1>Shape Detection and Processing</h1>
         <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
             <div class="form-group">
@@ -50,7 +51,7 @@
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formData = new FormData(this);
-            fetch('http://210.18.155.129:5000/upload', {
+            fetch('https://4297-210-18-155-129.ngrok-free.app/upload', {
                 method: 'POST',
                 body: formData
             })
